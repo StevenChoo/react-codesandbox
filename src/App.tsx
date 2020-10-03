@@ -22,6 +22,7 @@ const Title = styled.div`
   grid-row: 2/2;
   width: 100%;
   background: rgba(0, 0, 0, 0.1);
+  font-family: "PT Sans", sans-serif;
   font-size: 1.8rem;
 `;
 

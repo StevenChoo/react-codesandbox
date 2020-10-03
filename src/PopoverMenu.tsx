@@ -6,6 +6,7 @@ import React, {
   useRef
 } from "react";
 import styled from "styled-components";
+import useOnClickOutside from "use-onclickoutside";
 
 interface Props {
   target: ReactElement;
@@ -25,6 +26,8 @@ const Popover = styled.div`
   cursor: pointer;
   overflow: hidden;
   user-select: none;
+  background: FFFFFF;
+  box-shadow: 0px 0px 10px rgba(0, 31, 75, 0.4);
   top: ${(props) => props.menuHeight}px;
   right: 0;
 `;
@@ -46,10 +49,17 @@ export const PopoverMenuComponent: React.FC<Props> = ({
   const [isOpen, setIsOpened] = useState(!!defaultOpen);
   const [menuHeight, setMenuHeight] = useState(0);
   const menuElementRef = useRef(null);
-
+  const popoverRef = useRef(null);
   const toggle = (): void => {
     setIsOpened(!isOpen);
   };
+
+  const close = (): void => {
+    console.log("Click");
+    setIsOpened(false);
+  };
+
+  useOnClickOutside(popoverRef, close);
 
   useEffect(() => {
     setMenuHeight(menuElementRef.current.clientHeight);
