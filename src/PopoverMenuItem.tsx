@@ -1,7 +1,8 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styled from "styled-components";
 
 interface Props {
+  icon: ReactElement;
   title: string;
   onClick: () => void;
   className?: string;
@@ -14,13 +15,14 @@ const Title = styled.div``;
 const Icon = styled.div``;
 
 export const PopoverMenuItemComponent: React.FC<Props> = ({
+  icon,
   title,
   onClick,
   className
 }) => {
   return (
     <Item className={className} onClick={onClick}>
-      <Icon>Icon</Icon>
+      <Icon>{icon}</Icon>
       <Title>{title}</Title>
     </Item>
   );

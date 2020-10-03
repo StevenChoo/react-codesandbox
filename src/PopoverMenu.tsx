@@ -8,7 +8,7 @@ import React, {
 import styled from "styled-components";
 
 interface Props {
-  target: JSX.Element;
+  target: ReactElement;
   defaultOpen?: boolean;
   className?: string;
 }
@@ -25,7 +25,7 @@ const Popover = styled.div`
   cursor: pointer;
   overflow: hidden;
   user-select: none;
-  top: 0;
+  top: ${(props) => props.menuHeight}px;
   right: 0;
 `;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { FaEllipsisH } from "react-icons/fa";
+import { FaEllipsisH, FaTrashAlt, FaEdit } from "react-icons/fa";
 import { PopoverMenu } from "./PopoverMenu";
 import { PopoverMenuItem } from "./PopoverMenuItem";
 
@@ -22,6 +22,7 @@ const Title = styled.div`
   grid-row: 2/2;
   width: 100%;
   background: rgba(0, 0, 0, 0.1);
+  font-size: 1.8rem;
 `;
 
 const MenuButton = styled(PopoverMenu)`
@@ -35,7 +36,7 @@ const MenuButton = styled(PopoverMenu)`
 const MoreIcon = styled.div`
   display: inline-block;
   cursor: pointer;
-  height: 1em;
+  font-size: 1.8rem;
 
   &:hover {
     color: rgba(1, 1, 1, 0.7);
@@ -50,21 +51,31 @@ const MenuItem = styled(PopoverMenuItem)``;
 const App: React.FC = () => {
   return (
     <>
-      <div className="App">
-        <Menu>
-          <Title>Hello world</Title>
-          <MenuButton
-            target={
-              <MoreIcon>
-                <FaEllipsisH />
-              </MoreIcon>
-            }
-          >
-            <div>Test</div>
-            <div>Test</div>
-          </MenuButton>
-        </Menu>
-      </div>
+      <Menu>
+        <Title>Hello world</Title>
+        <MenuButton
+          target={
+            <MoreIcon>
+              <FaEllipsisH />
+            </MoreIcon>
+          }
+        >
+          <MenuItem
+            icon={<FaTrashAlt />}
+            title="Action 1"
+            onClick={() => {
+              console.log("Click action 1");
+            }}
+          />
+          <MenuItem
+            icon={<FaEdit />}
+            title="Action 2"
+            onClick={() => {
+              console.log("Click action 2");
+            }}
+          />
+        </MenuButton>
+      </Menu>
     </>
   );
 };
