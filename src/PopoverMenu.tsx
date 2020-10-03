@@ -59,6 +59,11 @@ export const PopoverMenuComponent: React.FC<Props> = ({
     setIsOpened(false);
   };
 
+  const handleClick = (event, onClick): void => {
+    close();
+    onClick(event);
+  };
+
   useOnClickOutside(popoverRef, close);
 
   useEffect(() => {
@@ -66,12 +71,24 @@ export const PopoverMenuComponent: React.FC<Props> = ({
     console.log(menuHeight);
   }, [menuHeight]);
 
+  const menuItems = React.Children.map(children, (menuItem) => {
+    if (
+      menuItem?.type?.displayName !== "PopoverMenuItem" &&
+      menuItem?.type?.displayName !== "Styled(PopoverMenuItem)"
+    ) {
+      throw new Error();
+    }
+    return React.cloneElement(menuItem, {
+      onClick: (event) => handleClick(event, menuItem.props.onClick)
+    });
+  });
+
   return (
     <Menu className={className} ref={menuElementRef}>
       {cloneElement(target, { onClick: toggle })}
       {isOpen && (
-        <Popover menuHeight={menuHeight}>
-          <MenuItemList>{children}</MenuItemList>
+        <Popover menuHeight={menuHeight} ref={popoverRef}>
+          <MenuItemList>{menuItems}</MenuItemList>
         </Popover>
       )}
     </Menu>
