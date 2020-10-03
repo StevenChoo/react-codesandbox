@@ -1,8 +1,14 @@
-import React, { cloneElement, ReactElement, useState } from "react";
+import React, {
+  cloneElement,
+  ReactElement,
+  useState,
+  useEffect,
+  useRef
+} from "react";
 import styled from "styled-components";
 
 interface Props {
-  target: ReactElement;
+  target: JSX.Element;
   defaultOpen?: boolean;
   className?: string;
 }
@@ -19,7 +25,7 @@ const Popover = styled.div`
   cursor: pointer;
   overflow: hidden;
   user-select: none;
-  top: 10rem;
+  top: 0;
   right: 0;
 `;
 
@@ -38,16 +44,23 @@ export const PopoverMenuComponent: React.FC<Props> = ({
   children
 }) => {
   const [isOpen, setIsOpened] = useState(!!defaultOpen);
+  const [menuHeight, setMenuHeight] = useState(0);
+  const menuElementRef = useRef(null);
 
   const toggle = (): void => {
     setIsOpened(!isOpen);
   };
 
+  useEffect(() => {
+    setMenuHeight(menuElementRef.current.clientHeight);
+    console.log(menuHeight);
+  }, [menuHeight]);
+
   return (
-    <Menu className={className}>
+    <Menu className={className} ref={menuElementRef}>
       {cloneElement(target, { onClick: toggle })}
       {isOpen && (
-        <Popover>
+        <Popover menuHeight={menuHeight}>
           <MenuItemList>{children}</MenuItemList>
         </Popover>
       )}
